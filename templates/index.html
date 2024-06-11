@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+  <title>Heart Disease Prediction</title>
+</head>
+<body>
+  <div
+    class="main"
+    style="
+      display: flex;
+      flex-direction: column;
+      background-image: url(../static/image.jpg);
+      background-size: cover;
+    "
+  >
+    <nav
+      style="
+        height: 50px;
+        background-color: aliceblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+      "
+    >
+      <label
+        style="
+          font-size: x-large;
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+        "
+      >
+        Heart Disease Prediction
+      </label>
+    </nav>
+
+    <div style="display: flex; width: 100%; flex-direction: row">
+      <div class="formDiv" style="width: 50%">
+        <form
+          class="px-2"
+          style="width: 100%; padding: auto"
+          action="{{url_for('predict')}}"
+          method="post"
+        >
+          <div class="mb-3 mx-2">
+            <input
+              type="text"
+              name="age"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter Your Age"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <select
+              type="text"
+              name="gender"
+              class="form-select my-1 mx-2"
+              aria-label="Default select example"
+              autocomplete="off"
+              required
+            >
+              <option selected>Select Your Gender</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
+          </div>
+
+          <div class="mb-3 mx-2">
+            <select
+              type="text"
+              name="cp"
+              class="form-select my-1 mx-2"
+              aria-label="Default select example"
+              autocomplete="off"
+              required
+            >
+              <option selected>Select your Chest Pain Type</option>
+              <option value="0">0-Typical angina</option>
+              <option value="1">1-Atypical angina</option>
+              <option value="2">2-Non-angina</option>
+              <option value="3">3-Asymptomatic angina</option>
+            </select>
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              name="restbps"
+              type="text"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Resting Blood Pressure (94 - 200 mmHg)"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              name="chol"
+              type="text"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Serum cholestoral (120-600 mg/dl)"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <select
+              type="text"
+              name="fbs"
+              class="form-select my-1 mx-2"
+              aria-label="Default select example"
+              autocomplete="off"
+              required
+            >
+              <option selected>(Fasting blood sugar > 120 mg/dL)</option>
+              <option value="1">True</option>
+              <option value="0">False</option>
+            </select>
+          </div>
+
+          <div class="mb-3 mx-2">
+            <select
+              type="text"
+              name="restecg"
+              class="form-select my-1 mx-2"
+              aria-label="Default select example"
+              autocomplete="off"
+              required
+            >
+              <option selected>Resting electrocardiographic results</option>
+              <option value="0">0-Normal</option>
+              <option value="1">1-Abnormal</option>
+              <option value="2">2-Severe</option>
+            </select>
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              name="maxHeartRate"
+              type="text"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Maximum Heart Rate (71 - 202)"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <select
+              type="text"
+              name="exang"
+              class="form-select my-1 mx-2"
+              aria-label="Default select example"
+              autocomplete="off"
+              required
+            >
+              <option selected>Exercise Included Angina</option>
+              <option value="1">YES</option>
+              <option value="0">NO</option>
+            </select>
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              name="oldpeak"
+              type="text"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Old Peak"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <select
+              type="text"
+              name="slope"
+              class="form-select my-1 mx-2"
+              aria-label="Default select example"
+              autocomplete="off"
+              required
+            >
+              <option selected>Slope (the pattern of change in the ST segment)</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              name="majorVessel"
+              type="text"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter number of colored major vessels (0-3)"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              type="text"
+              name="glucose"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter glucose level"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              type="text"
+              name="kcm"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Kcm(CK-MB) Creatine Kinase level"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="mb-3 mx-2">
+            <input
+              type="text"
+              name="troponin"
+              class="form-control my-1 mx-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter Troponin Value"
+              autocomplete="off"
+              required
+            />
+          </div>
+          
+          <button
+            type="submit"
+            class="btn btn-primary px-2 mx-2 my-2"
+            style="width: 100%"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <div
+        class="res"
+        style="
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: xx-large;
+        "
+      >
+        <span>
+          <div>
+            {{ prediction_text|safe }}
+          </div>
+          <div id="predictionImageContainer" style="display: none;">
+            <img id="predictionImage" src="{{ prediction_image }}" alt="Prediction Probabilities">
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      var predictionImageContainer = document.getElementById('predictionImageContainer');
+      if (predictionImageContainer && '{{ prediction_image }}') {
+        predictionImageContainer.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
